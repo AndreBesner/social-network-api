@@ -1,6 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
-// ADD CODE HERE FOR DATE FORMATTING
+const dayjs = require('dayjs');
 
 const ReactionSchema = new Schema(
     {
@@ -20,7 +20,11 @@ const ReactionSchema = new Schema(
             
         },
         createdAt: {
-            // FILL THIS IN ONCE WE KNOW HOW WE ARE FORMATTING DATE
+            type: Date,
+            default: Date.now,
+            get: function(timestamp) {
+                return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+            },
         },
     },
     {
@@ -40,7 +44,11 @@ const ThoughtSchema = new Schema(
             maxlength: 280,
         },
         createdAt: {
-            // FILL THIS IN ONCE WE KNOW WE ARE FORMATTING DATE
+            type: Date,
+            default: Date.now,
+            get: function(timestamp) {
+                return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+            },
         },
         username: {
             type: String,

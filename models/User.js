@@ -10,11 +10,11 @@ const UserSchema = new Schema(
         },
         email: {
             type: String,
-            unque: true,
+            unique: true,
             required: "Please enter valid email address",
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
         },
-        thoughts: [
+        thought: [
             {
             type: Schema.Types.ObjectId,
             ref: "Thought",
@@ -23,7 +23,7 @@ const UserSchema = new Schema(
         ],
         friends:[ {
             type: Schema.Types.ObjectId,
-            ref: "Friends",
+            ref: "User",
         },
     ],
     },

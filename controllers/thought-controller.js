@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models'); //ENSURE THIS PATH IS CORRECT ON LOCAL MACHINE
+const { Thought, User } = require('../models'); 
  
 const thoughtController = {
     
