@@ -40,7 +40,7 @@ const thoughtController = {
   },
 
   //createThought
-  createThought({ params, body }, res) {
+  /* createThought({ params, body }, res) {
     Thought.create(body)
       .then(({ _id }) => {
         return User.findOneAndUpdate(
@@ -56,6 +56,32 @@ const thoughtController = {
             .json({ message: "No user exists with this ID! Try again!" });
         }
 
+        res.json({ message: "Congrats! Thought was created!" });
+      })
+      .catch((err) => res.json(err));
+  }, */
+
+  createThought({ params, body }, res) {
+    //check for user first
+    User.findOne({ username: body.username })
+      .then((dbUser) => {
+        if (!dbUser) {
+          return res
+            .status(404)
+            .json({ message: "Username does not exist! Try again!" });
+        }
+
+        return Thought.create(body);
+      })
+      .then((thought) => {
+        // Update the user's thoughts array
+        return User.findOneAndUpdate(
+          { username: body.username },
+          { $push: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
+      .then((dbUserData) => {
         res.json({ message: "Congrats! Thought was created!" });
       })
       .catch((err) => res.json(err));
@@ -99,12 +125,10 @@ const thoughtController = {
       })
       .then((dbUserData) => {
         if (!dbUserData) {
-          return res
-            .status(404)
-            .json({
-              message:
-                "No user exists with this id to delete their thought! Try again!",
-            });
+          return res.status(404).json({
+            message:
+              "No user exists with this id to delete their thought! Try again!",
+          });
         }
         res.json({ message: "Congrats! Thought was updated!" });
       })
@@ -122,12 +146,10 @@ const thoughtController = {
     )
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res
-            .status(404)
-            .json({
-              message:
-                "No thought exists with this id to delete the reaction! Try again!",
-            });
+          res.status(404).json({
+            message:
+              "No thought exists with this id to delete the reaction! Try again!",
+          });
           return;
         }
         res.json(dbThoughtData);
