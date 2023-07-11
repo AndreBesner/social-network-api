@@ -39,28 +39,6 @@ const thoughtController = {
       });
   },
 
-  //createThought
-  /* createThought({ params, body }, res) {
-    Thought.create(body)
-      .then(({ _id }) => {
-        return User.findOneAndUpdate(
-          { _id: body.userId },
-          { $push: { thoughts: _id } },
-          { new: true }
-        );
-      })
-      .then((dbUserData) => {
-        if (!dbUserData) {
-          return res
-            .status(404)
-            .json({ message: "No user exists with this ID! Try again!" });
-        }
-
-        res.json({ message: "Congrats! Thought was created!" });
-      })
-      .catch((err) => res.json(err));
-  }, */
-
   createThought({ params, body }, res) {
     //check for user first
     User.findOne({ username: body.username })
