@@ -11,7 +11,7 @@ const {
 
 router.route("/").get(getAllUser).post(createUser);
 
-router.route("/:id").get(getUserById).put(updateUser)
+router.route("/:id").get(getUserById).put(updateUser);
 //delete user to be added once finished everything else
 
 router.route("/:userId/friends/:friendId").post(addFriend).delete(removeFriend);
